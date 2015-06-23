@@ -26,3 +26,35 @@
 *.exe
 *.out
 *.app
+
+# --- ADDED ---
+
+# Misc. old stuf from FreeX
+*.o
+*~
+*.dll
+*.bat
+*.sublime-project
+*.sublime-workspace
+lib/
+include/
+doc/html/
+doc/latex/
+obj/
+dep/
+bin/
+archive.zip
+dist.zip
+config
+
+# All logs, including testlogs
+logs/
+
+# All compiled object files
+*.osrc
+*.otest
+
+
+
+
+
