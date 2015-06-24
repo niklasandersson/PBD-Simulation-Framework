@@ -153,6 +153,9 @@ private:
   name.run()
 
 
+#define ERROR_PREFIX "Error: "
+#define WARNING_PREFIX "Warning: "
+
 
 #define LOG_FILE_LINE_IMPL(output) \
   output << "@ " << __FILE__ << " " << __LINE__
@@ -169,7 +172,7 @@ private:
 
 #define LOG_WARNING_FOR_ONE_ARG_IMPL(macroStr, result, output, argStr, a, descriptionStr) \
   if( !result ) { \
-    output << "Warning: " << macroStr << "_WARNING(" << argStr << ")" << " (" << a << ") " << descriptionStr << std::endl; \
+    output << WARNING_PREFIX << macroStr << "_WARNING(" << argStr << ")" << " (" << a << ") " << descriptionStr << std::endl; \
     LOG_FILE_LINE_IMPL(output); \
     output << std::endl; \
   } 
@@ -185,7 +188,7 @@ private:
 
 #define LOG_WARNING_FOR_TWO_ARGS_IMPL(macroStr, result, output, arg1Str, a1, descriptionStr, arg2Str, a2) \
   if( !result ) { \
-    output << "Warning: " << macroStr << "_WARNING(" << arg1Str << ", " << arg2Str << ") is not evaluated to true, since "; \
+    output << WARNING_PREFIX << macroStr << "_WARNING(" << arg1Str << ", " << arg2Str << ") is not evaluated to true, since "; \
     output << "'" << arg1Str << "' (" << a1 << ") " << descriptionStr << " '" << arg2Str << "' (" << a2 << ")" << std::endl; \
     LOG_FILE_LINE_IMPL(output); \
     output << std::endl; \
@@ -209,7 +212,7 @@ private:
 
 
 
-#define CHECK_THROW_IMPL(expression, exception, prefixStr) \
+#define EXPECT_THROW_IMPL(expression, exception, prefixStr) \
   [&]() -> bool { \
     bool result = false; \
     try { \
@@ -218,22 +221,54 @@ private:
       result = true; \
     } \
     if( !result ) { \
-      log_ << prefixStr << " '" << #expression << "' did not throw the exception'" << #exception << "'" << std::endl; \
+      log_ << prefixStr << "'" << #expression << "' did not throw the exception '" << #exception << "'" << std::endl; \
     } \
     return result; \
   }()
 
+#define EXPECT_THROW_MESSAGE_IMPL(expression, exception, prefixStr, message) \
+  [&]() -> bool { \
+    bool exceptionThrown = false; \
+    bool rightMessage = false; \
+    std::string thrownMessage = ""; \
+    try { \
+      expression; \
+    } catch(const exception& e) { \
+      exceptionThrown = true; \
+      thrownMessage = e.what(); \
+      if( message == thrownMessage ) { \
+        rightMessage = true; \
+      } else { \
+        std::ostringstream os; \
+        os << "'" << #expression << "' did throw the exception '" << #exception << "' but with the wrong message '"; \
+        os << thrownMessage << "' as it is expected be '" << message << "'"; \
+        if( prefixStr == WARNING_PREFIX ) { \
+          log_ << prefixStr << os.str() << std::endl; \
+        } else { \
+          throw std::invalid_argument{os.str()}; \
+        } \
+      } \
+    } \
+    return exceptionThrown && rightMessage; \
+  }()
+
 #define EXPECT_ANY_THROW(expression) \
-  CHECK_THROW_IMPL(expression, std::exception, "Error:")
+  EXPECT_THROW_IMPL(expression, std::exception, ERROR_PREFIX)
 
 #define EXPECT_THROW(expression, exception) \
-  CHECK_THROW_IMPL(expression, exception, "Error:")
+  EXPECT_THROW_IMPL(expression, exception, ERROR_PREFIX)
+
+#define EXPECT_THROW_MESSAGE(expression, exception, message) \
+  EXPECT_THROW_MESSAGE_IMPL(expression, exception, ERROR_PREFIX, message)  
 
 #define EXPECT_ANY_THROW_WARNING(expression) \
-  CHECK_THROW_IMPL(expression, std::exception, "Warning:")
+  EXPECT_THROW_IMPL(expression, std::exception, WARNING_PREFIX)
 
 #define EXPECT_THROW_WARNING(expression, exception) \
-  CHECK_THROW_IMPL(expression, exception, "Warning:")
+  EXPECT_THROW_IMPL(expression, exception, WARNING_PREFIX)
+
+#define EXPECT_THROW_MESSAGE_WARNING(expression, exception, message) \
+  EXPECT_THROW_MESSAGE_IMPL(expression, exception, WARNING_PREFIX, message)  
 
 
 

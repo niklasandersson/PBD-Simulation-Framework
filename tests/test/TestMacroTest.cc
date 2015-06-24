@@ -8,14 +8,30 @@ BATCH_CLASS(TestMacroBatch) {
 
     public:
       void throwingFunction() {
-        throw std::invalid_argument{"This is a usual throw message."};
+        throw std::domain_error{"This is a usual throw message."};
       }
 
     };
 
     TEST(UsualThrowTest) {
       ThrowingClassMock tcm;
-      return EXPECT_THROW(tcm.throwingFunction(), std::invalid_argument);
+      return EXPECT_THROW(tcm.throwingFunction(), std::domain_error);
+    };
+
+    TEST(MessageThrowTest1) {
+      ThrowingClassMock tcm;
+      return EXPECT_THROW_MESSAGE_WARNING(tcm.throwingFunction(), std::domain_error, "This is a usual throw message.");
+    };
+
+    TEST(MessageThrowTest2) {
+      ThrowingClassMock tcm;
+      log_ << "There should be a warning here:" << std::endl;
+      return EXPECT_THROW_MESSAGE_WARNING(tcm.throwingFunction(), std::domain_error, "This is not a usual throw message.") == false;
+    };
+
+    TEST(MessageThrowTest3) {
+      ThrowingClassMock tcm;
+      return EXPECT_THROW(EXPECT_THROW_MESSAGE(tcm.throwingFunction(), std::domain_error, "This is not a usual throw message."), std::invalid_argument);
     };
 
   };
