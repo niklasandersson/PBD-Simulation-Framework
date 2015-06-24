@@ -155,7 +155,7 @@ private:
 
 
 #define LOG_FILE_LINE_IMPL(output) \
-  output << "@ " << __FILE__ << " " << __LINE__ << std::endl 
+  output << "@ " << __FILE__ << " " << __LINE__
 
 
 
@@ -171,6 +171,7 @@ private:
   if( !result ) { \
     output << "Warning: " << macroStr << "_WARNING(" << argStr << ")" << " (" << a << ") " << descriptionStr << std::endl; \
     LOG_FILE_LINE_IMPL(output); \
+    output << std::endl; \
   } 
 
 #define LOG_ERROR_FOR_TWO_ARGS_IMPL(macroStr, result, output, arg1Str, a1, descriptionStr, arg2Str, a2) \
@@ -187,6 +188,7 @@ private:
     output << "Warning: " << macroStr << "_WARNING(" << arg1Str << ", " << arg2Str << ") is not evaluated to true, since "; \
     output << "'" << arg1Str << "' (" << a1 << ") " << descriptionStr << " '" << arg2Str << "' (" << a2 << ")" << std::endl; \
     LOG_FILE_LINE_IMPL(output); \
+    output << std::endl; \
   }
 
 

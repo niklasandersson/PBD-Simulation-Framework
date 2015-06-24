@@ -166,7 +166,7 @@ bool Batch::execute() {
       // os << Ansi::color("Error:", Ansi::Color::RED, Ansi::Type::NORMAL) << std::endl;
       // os << "Uncaught exception: " << typeid(e).name() << std::endl;
       os  << "Error, uncaught exception: " << typeid(e).name() << std::endl;
-      os << e.what();
+      os << e.what() << std::endl;
       os << log_.getResult(testResult, test->hasWarning()) << std::endl << std::endl;
       test->log(os.str());
       testLog = test->getLog();
