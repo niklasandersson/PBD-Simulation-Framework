@@ -241,7 +241,8 @@ private:
       } else { \
         std::ostringstream os; \
         os << "'" << #expression << "' did throw the exception '" << #exception << "' but with the wrong message '"; \
-        os << thrownMessage << "' as it is expected be '" << message << "'"; \
+        os << thrownMessage << "' as it is expected be '" << message << "'" << std::endl; \
+        LOG_FILE_LINE_IMPL(os); \
         if( prefixStr == WARNING_PREFIX ) { \
           log_ << prefixStr << os.str() << std::endl; \
         } else { \
