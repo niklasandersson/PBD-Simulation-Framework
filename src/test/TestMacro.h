@@ -393,4 +393,20 @@ T orer(T first, Args... args) {
 
 
 
+#define XOR_IMPL(arg1, arg2, log) \
+  [&]() -> bool { \
+    const auto a1 = arg1; \
+    const auto a2 = arg2; \
+    const bool result = a1 ^ a2; \
+    log("XOR", result, log_, #arg1, a1, "is not the opposite to", #arg2, a2) \
+    return result; \
+  }()
+
+#define XOR(arg1, arg2) \
+  XOR_IMPL(arg1, arg2, LOG_ERROR_FOR_TWO_ARGS_IMPL)
+
+#define XOR_WARNING(arg1, arg2) \
+  XOR_IMPL(arg1, arg2, LOG_WARNING_FOR_TWO_ARGS_IMPL)
+
+
 #endif

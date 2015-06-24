@@ -2,6 +2,8 @@
 
 BATCH_CLASS(TestMacroBatch) {
 
+
+
   BATCH(ThrowMessageBatch) {
 
     class ThrowingClassMock {
@@ -35,5 +37,37 @@ BATCH_CLASS(TestMacroBatch) {
     };
 
   };
+
+
+
+  BATCH(XorBatch) {
+
+    TEST(XorTest1) {
+      const bool a = true;
+      const bool b = false;
+      return XOR(a, b) == (a ^ b);
+    };
+
+    TEST(XorTest2) {
+      const bool a = false;
+      const bool b = true;
+      return XOR(a, b) == (a ^ b);
+    };
+
+    TEST(XorTest3) {
+      const bool a = false;
+      const bool b = false;
+      return XOR_WARNING(a, b) == (a ^ b);
+    };
+
+    TEST(XorTest4) {
+      const bool a = true;
+      const bool b = true;
+      return XOR_WARNING(a, b) == (a ^ b);
+    };
+
+  };
+
+
 
 };
