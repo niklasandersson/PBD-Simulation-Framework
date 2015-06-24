@@ -157,6 +157,12 @@ private:
 #define WARNING_PREFIX "Warning: "
 
 
+
+#define LOG_EXPECT_WARNING(log) \
+  log << "Expect a warning here:" << std::endl
+
+
+
 #define LOG_FILE_LINE_IMPL(output) \
   output << "@ " << __FILE__ << " " << __LINE__
 

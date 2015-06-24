@@ -27,7 +27,7 @@ BATCH_CLASS(TestMacroBatch) {
 
     TEST(MessageThrowTest2) {
       ThrowingClassMock tcm;
-      log_ << "There should be a warning here:" << std::endl;
+      LOG_EXPECT_WARNING(log_);
       return EXPECT_THROW_MESSAGE_WARNING(tcm.throwingFunction(), std::domain_error, "This is not a usual throw message.") == false;
     };
 
@@ -57,12 +57,14 @@ BATCH_CLASS(TestMacroBatch) {
     TEST(XorTest3) {
       const bool a = false;
       const bool b = false;
+      LOG_EXPECT_WARNING(log_);
       return XOR_WARNING(a, b) == (a ^ b);
     };
 
     TEST(XorTest4) {
       const bool a = true;
       const bool b = true;
+      LOG_EXPECT_WARNING(log_);
       return XOR_WARNING(a, b) == (a ^ b);
     };
 
