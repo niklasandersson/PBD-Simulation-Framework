@@ -12,6 +12,9 @@ BATCH_CLASS(TestMacroBatch) {
       void throwingFunction() {
         throw std::domain_error{"This is a usual throw message."};
       }
+      void anyThrowingFunction() {
+        throw 1337;
+      }
 
     };
 
@@ -34,6 +37,21 @@ BATCH_CLASS(TestMacroBatch) {
     TEST(MessageThrowTest3) {
       ThrowingClassMock tcm;
       return EXPECT_THROW(EXPECT_THROW_MESSAGE(tcm.throwingFunction(), std::domain_error, "This is not a usual throw message."), std::invalid_argument);
+    };
+
+    TEST(MessageThrowTest4) {
+      ThrowingClassMock tcm;
+      return EXPECT_ANY_THROW(EXPECT_THROW_MESSAGE(tcm.throwingFunction(), std::invalid_argument, "This is not a usual throw message."));
+    };
+
+    TEST(MessageThrowTest5) {
+      ThrowingClassMock tcm;
+      return EXPECT_ANY_THROW(tcm.anyThrowingFunction());
+    };
+
+    TEST(MessageThrowTest6) {
+      ThrowingClassMock tcm;
+      return EXPECT_ANY_THROW(EXPECT_THROW_MESSAGE(tcm.anyThrowingFunction(), std::invalid_argument, "This is not a usual throw message."));
     };
 
   };
