@@ -218,7 +218,7 @@ private:
   ASSERT_IMPL(expression, LOG_WARNING_FOR_ONE_ARG_IMPL)
 
 
-#define EXPECT_ANY_THROW_IMPL(expression, prefixStr) \
+#define EXPECT_ANY_THROW_IMPL(macroStr, expression, prefixStr) \
   [&]() -> bool { \
     bool result = false; \
     try { \
@@ -228,7 +228,7 @@ private:
     } \
     if( !result ) { \
       std::ostringstream os; \
-      os << "'" << #expression << "' did not throw any exception" << std::endl; \
+      os << macroStr << "(" << #expression << ") did not throw any exception" << std::endl; \
       LOG_FILE_LINE_IMPL(os); \
       if( prefixStr == WARNING_PREFIX ) { \
         log_ << prefixStr << os.str() << std::endl; \
@@ -239,7 +239,7 @@ private:
     return result; \
   }()
 
-#define EXPECT_THROW_IMPL(expression, expectedException, prefixStr) \
+#define EXPECT_THROW_IMPL(macroStr, expression, expectedException, prefixStr) \
   [&]() -> bool { \
     bool result = false; \
     try { \
@@ -248,7 +248,7 @@ private:
       result = true; \
     } catch(const std::exception& e) { \
       std::ostringstream os; \
-      os << "'" << #expression << "' did not even throw the exception '" << #expectedException << "'"; \
+      os << macroStr << "(" << #expression << ", " << #expectedException << ") did not even throw the expected exception"; \
       os << ", another faulty exception was thrown ("  << typeid(e).name() << ")" << std::endl; \
       LOG_FILE_LINE_IMPL(os); \
       log_ << prefixStr << os.str() << std::endl; \
@@ -256,7 +256,7 @@ private:
     } \
     if( !result ) { \
       std::ostringstream os; \
-      os << "'" << #expression << "' did not throw the exception '" << #expectedException << "'" << std::endl; \
+      os << macroStr << "(" << #expression << ", " << #expectedException << ") did not throw the expected exception" << std::endl; \
       LOG_FILE_LINE_IMPL(os); \
       if( prefixStr == WARNING_PREFIX ) { \
         log_ << prefixStr << os.str() << std::endl; \
@@ -267,7 +267,7 @@ private:
     return result; \
   }()
 
-#define EXPECT_THROW_MESSAGE_IMPL(expression, expectedException, prefixStr, message) \
+#define EXPECT_THROW_MESSAGE_IMPL(macroStr, expression, expectedException, prefixStr, messageStr) \
   [&]() -> bool { \
     bool rightExceptionThrown = false; \
     bool rightMessage = false; \
@@ -277,12 +277,12 @@ private:
     } catch(const expectedException& e) { \
       rightExceptionThrown = true; \
       thrownMessage = e.what(); \
-      if( message == thrownMessage ) { \
+      if( messageStr == thrownMessage ) { \
         rightMessage = true; \
       } \
     } catch(const std::exception& e) { \
       std::ostringstream os; \
-      os << "'" << #expression << "' did not even throw the exception '" << #expectedException << "', so that the throw messages could not even be compared"; \
+      os << macroStr << "(" << #expression << ", " << #expectedException << ", " << #messageStr << ") did not even throw the expected exception so that the throw messages could not even be compared"; \
       os << ", another faulty exception was thrown ("  << typeid(e).name() << ")" << std::endl; \
       LOG_FILE_LINE_IMPL(os); \
       log_ << prefixStr << os.str() << std::endl; \
@@ -292,10 +292,10 @@ private:
     if( !result ) { \
       std::ostringstream os; \
       if( rightExceptionThrown ) { \
-        os << "'" << #expression << "' did throw the exception '" << #expectedException << "' but with the wrong message '"; \
-        os << thrownMessage << "' as it is expected to be '" << message << "'" << std::endl; \
+        os << macroStr << "(" << #expression << ", " << #expectedException << ", " << #messageStr << ") did throw the expected exception but with the wrong message '"; \
+        os << thrownMessage << "'" << std::endl; \
       } else { \
-        os << "'" << #expression << "' did not even throw the exception '" << #expectedException << "', so that the throw messages could not even be compared"; \
+        os << macroStr << "(" << #expression << ", " << #expectedException << ", " << #messageStr << ") did not even throw the expected exception so that the throw messages could not even be compared"; \
         os << std::endl; \
       } \
       LOG_FILE_LINE_IMPL(os); \
@@ -309,22 +309,22 @@ private:
   }()
 
 #define EXPECT_ANY_THROW(expression) \
-  EXPECT_ANY_THROW_IMPL(expression, ERROR_PREFIX)
+  EXPECT_ANY_THROW_IMPL("EXPECT_ANY_THROW", expression, ERROR_PREFIX)
 
 #define EXPECT_THROW(expression, stdException) \
-  EXPECT_THROW_IMPL(expression, stdException, ERROR_PREFIX)
+  EXPECT_THROW_IMPL("EXPECT_THROW", expression, stdException, ERROR_PREFIX)
 
-#define EXPECT_THROW_MESSAGE(expression, stdException, message) \
-  EXPECT_THROW_MESSAGE_IMPL(expression, stdException, ERROR_PREFIX, message)  
+#define EXPECT_THROW_MESSAGE(expression, stdException, messageStr) \
+  EXPECT_THROW_MESSAGE_IMPL("EXPECT_THROW_MESSAGE", expression, stdException, ERROR_PREFIX, messageStr)  
 
 #define EXPECT_ANY_THROW_WARNING(expression) \
-  EXPECT_ANY_THROW_IMPL(expression, WARNING_PREFIX)
+  EXPECT_ANY_THROW_IMPL("EXPECT_ANY_THROW_WARNING", expression, WARNING_PREFIX)
 
 #define EXPECT_THROW_WARNING(expression, stdException) \
-  EXPECT_THROW_IMPL(expression, stdException, WARNING_PREFIX)
+  EXPECT_THROW_IMPL("EXPECT_THROW_WARNING", expression, stdException, WARNING_PREFIX)
 
-#define EXPECT_THROW_MESSAGE_WARNING(expression, stdException, message) \
-  EXPECT_THROW_MESSAGE_IMPL(expression, stdException, WARNING_PREFIX, message)  
+#define EXPECT_THROW_MESSAGE_WARNING(expression, stdException, messageStr) \
+  EXPECT_THROW_MESSAGE_IMPL("EXPECT_THROW_MESSAGE_WARNING", expression, stdException, WARNING_PREFIX, messageStr)  
 
 
 
