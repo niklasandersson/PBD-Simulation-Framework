@@ -19,7 +19,7 @@
 
 
 
-#define TEST_CLASS(name) \
+#define REGISTER_CLASS(name) \
   class name : public TestAbleClass { \
  \
   public: \
@@ -81,7 +81,7 @@
 
 
 
-#define REG_CLASS(name) \
+#define TEST_CLASS(name) \
   TestMacro name{#name, __FILE__, __LINE__}; \
   class name##ClassType { \
  \

@@ -37,3 +37,6 @@ else
   fi 
 
 fi
+
+echo --- autoComplete.sh ---
+. ./autoComplete.sh

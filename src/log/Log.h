@@ -22,7 +22,6 @@ public:
 
   std::string getDateAndTime() const;
   std::string getStartDateAndTime() const;
-  virtual std::string getFileTag() const;
   
   template <typename T>
   Log& operator<<(const T& x) {
@@ -43,6 +42,8 @@ public:
   void setEnabled(const bool enabled);
   void setName(const std::string name);
   void setPath(const std::string path);
+  void setFileTag(const std::string fileTag);
+  void setFileName(const std::string fileName);
   void enablePrintToCout();
   void disablePrintToCout();
 
@@ -54,10 +55,12 @@ public:
   void begin();
   void end();
 
+  void write();
+
 protected:
 
 private:
-  std::string constructFileName();
+  void constructFileName();
   bool printToCout_;
   unsigned int tabCounter_;
 
@@ -66,6 +69,8 @@ private:
   std::ostringstream log_;
   std::string name_;
   std::string path_;
+  std::string fileTag_;
+  std::string fileName_;
 
 };
 

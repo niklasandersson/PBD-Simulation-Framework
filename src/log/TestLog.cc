@@ -1,8 +1,8 @@
 #include "log/TestLog.h"
 
 
-std::string TestLog::getFileTag() const {
-  return "ansi";
+TestLog::TestLog() {
+  setFileTag("ansi");
 }
 
 // #ifdef __linux__ 

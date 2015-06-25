@@ -6,7 +6,10 @@ Log::Log() {
   printToCout_ = true;
   path_ = "logs/";
   name_ = "Log";
+  fileTag_ = ".txt";
+  fileName_ = "FileName.txt";
   tabCounter_ = 0;
+  clear();
 }
 
 
@@ -26,11 +29,6 @@ std::string Log::getDateAndTime() const {
 
 std::string Log::getStartDateAndTime() const {
   return startDateAndTime_;
-}
-
-
-std::string Log::getFileTag() const {
-  return "txt";
 }
 
 
@@ -71,6 +69,16 @@ void Log::setPath(const std::string path) {
 }
 
 
+void Log::setFileTag(const std::string fileTag) {
+  fileTag_ = fileTag;
+}
+
+
+void Log::setFileName(const std::string fileName) {
+  fileName_ = fileName;
+}
+
+
 void Log::putLine(const char c) {
   *this << std::setfill(c) << std::setw(80) << c << std::endl;
 }
@@ -88,25 +96,30 @@ void Log::begin() {
 }
 
 
-std::string Log::constructFileName() {
+void Log::constructFileName() {
   std::string fileName = path_;
   fileName.append(name_);
   fileName.append("_");
   fileName.append(startDateAndTime_);
-  fileName.append(std::string{"."} + getFileTag());
-  return fileName;
+  fileName.append(std::string{"."} + fileTag_);
+  fileName_ = fileName;
 }
 
 
 void Log::end() {
-  std::string fileName = constructFileName();
+  constructFileName();
+  write();
+}
+
+
+void Log::write() {
   std::ofstream output;
   try {
-    output.open(fileName.c_str());
+    output.open(fileName_.c_str());
     output << log_.str();
     output.close();
   } catch (std::ifstream::failure e) {
-    std::cerr << "Exception opening/writing/closing log file: " << fileName << std::endl;
+    std::cerr << "Exception opening/writing/closing log file: " << fileName_ << std::endl;
   }
 }
 

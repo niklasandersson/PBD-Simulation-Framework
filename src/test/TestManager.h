@@ -14,6 +14,8 @@
 #include <cstdlib>
 #include <string>
 
+#include "log/Log.h"
+
 #include "test/Test.h"
 #include "test/Batch.h"
 
@@ -43,10 +45,14 @@ public:
       }
 
       if( argc == 2 ) {
-        if( argvToLower[1] == "help") {
+
+        if( argvToLower[1] == "saveallteststofile" ) {
+          TestManager::getInstance().saveAllTestsToFile();
+          return true;
+        } else if( argvToLower[1] == "help" ) {
           TestManager::getInstance().printHelp();
           return true;
-        } if( (argvToLower[1] == "ls") || (argvToLower[1] == "list") ) {
+        } else if( (argvToLower[1] == "ls") || (argvToLower[1] == "list") ) {
           TestManager::getInstance().listAllBatches();
           TestManager::getInstance().listAllTests();
           return true;
@@ -148,6 +154,17 @@ public:
       }
     }
     std::cout << std::endl;
+  }
+
+
+  void saveAllTestsToFile() {
+    Log savedTestsLog;
+    savedTestsLog.setFileName("tests.txt");
+    registerTests();
+    for(auto& test : tests_) {
+      savedTestsLog << test->getName() << std::endl;
+    }
+    savedTestsLog.write();
   }
 
 

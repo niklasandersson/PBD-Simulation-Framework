@@ -49,6 +49,7 @@ config
 
 # All logs, including testlogs
 logs/
+tests.txt
 
 # All compiled object files
 *.osrc
