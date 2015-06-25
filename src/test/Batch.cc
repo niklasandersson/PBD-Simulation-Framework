@@ -161,7 +161,6 @@ bool Batch::execute() {
 
     try {
       testResult = test->test();
-      testLog = test->getLog();
     } catch( const std::exception& e ) {
       exceptionThrown = true;
       throwOs  << "Error, uncaught exception: " << typeid(e).name() << std::endl;
@@ -195,8 +194,9 @@ bool Batch::execute() {
       testResult = false;;
       throwOs << log_.getResult(testResult, test->hasWarning()) << std::endl << std::endl;
       test->log(throwOs.str());
-      testLog = test->getLog();
     }
+
+    testLog = test->getLog();
 
     if( !testResult ) {
       batchResult = false;
