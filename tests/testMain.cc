@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "test/TestManager.h"
 
 int main(int argc, const char* argv[]) {
