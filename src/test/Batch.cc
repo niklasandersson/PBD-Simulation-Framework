@@ -164,30 +164,30 @@ bool Batch::execute() {
     } catch( const std::exception& e ) {
       exceptionThrown = true;
       throwOs  << "Error, uncaught exception: " << typeid(e).name() << std::endl;
-      throwOs << "(" << e.what() << ")" << std::endl;
+      throwOs << e.what() << std::endl;
     } catch( const unsigned int& e ) {
       exceptionThrown = true;
-      throwOs  << "Error, uncaught exception: unsigned int exception" << std::endl;
-      throwOs << "(" << e << ")" << std::endl;
+      throwOs  << "Error, uncaught exception: unsigned int" << std::endl;
+      throwOs << e << std::endl;
     } catch( const int& e ) {
       exceptionThrown = true;
-      throwOs  << "Error, uncaught exception: " << "int exception" << std::endl;
-      throwOs << "(" << e << ")" << std::endl;
+      throwOs  << "Error, uncaught exception: " << "int" << std::endl;
+      throwOs << e << std::endl;
     } catch( const char* e ) {
       exceptionThrown = true;
-      throwOs  << "Error, uncaught exception: " << "c-string exception" << std::endl;
-      throwOs << "(" << e << ")" << std::endl;
+      throwOs  << "Error, uncaught exception: " << "c-string" << std::endl;
+      throwOs << e << std::endl;
     } catch( const std::string& e ) {
       exceptionThrown = true;
-      throwOs  << "Error, uncaught exception: " << "std::string exception" << std::endl;
-      throwOs << "(" << e << ")" << std::endl;
+      throwOs  << "Error, uncaught exception: " << "std::string" << std::endl;
+      throwOs << e << std::endl;
     } catch( const char& e ) {
       exceptionThrown = true;
-      throwOs  << "Error, uncaught exception: " << "char exception" << std::endl;
-      throwOs << "(" << e << ")" << std::endl;
+      throwOs  << "Error, uncaught exception: " << "char" << std::endl;
+      throwOs << e << std::endl;
     } catch( ... ) {
       exceptionThrown = true;
-      throwOs  << "Error, uncaught exception: " << "unknown exception" << std::endl;
+      throwOs  << "Error, uncaught exception: " << "unknown" << std::endl;
     }
 
     if( exceptionThrown ) {

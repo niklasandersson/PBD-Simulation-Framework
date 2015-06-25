@@ -55,51 +55,51 @@ BATCH_CLASS(TestMacroBatch) {
       return EXPECT_THROW(EXPECT_THROW_MESSAGE(tcm.throwingFunction(), std::domain_error, "This is not a usual throw message."), std::invalid_argument);
     };
 
-    TEST(MessageThrowTest4) {
-      ThrowingClassMock tcm;
-      return EXPECT_THROW_MESSAGE(tcm.throwingFunction(), std::invalid_argument, "This is not a usual throw message.");
-    };
+    // TEST(MessageThrowTest4) {
+    //   ThrowingClassMock tcm;
+    //   return EXPECT_THROW_MESSAGE(tcm.throwingFunction(), std::invalid_argument, "This is not a usual throw message.");
+    // };
 
-    TEST(MessageThrowTest5) {
-      ThrowingClassMock tcm;
-      return EXPECT_ANY_THROW(tcm.intThrowingFunction());
-    };
+    // TEST(MessageThrowTest5) {
+    //   ThrowingClassMock tcm;
+    //   return EXPECT_ANY_THROW(tcm.intThrowingFunction());
+    // };
 
-    TEST(MessageThrowTest6) {
-      ThrowingClassMock tcm;
-      return EXPECT_THROW_MESSAGE(tcm.intThrowingFunction(), std::invalid_argument, "This is not a usual throw message.");
-    };
+    // TEST(MessageThrowTest6) {
+    //   ThrowingClassMock tcm;
+    //   return EXPECT_THROW_MESSAGE(tcm.intThrowingFunction(), std::invalid_argument, "This is not a usual throw message.");
+    // };
 
-    TEST(MessageThrowTest7) {
-      ThrowingClassMock tcm;
-      tcm.cStringThrowingFunction();
-      return true;
-    };
+    // TEST(MessageThrowTest7) {
+    //   ThrowingClassMock tcm;
+    //   tcm.cStringThrowingFunction();
+    //   return true;
+    // };
 
-    TEST(MessageThrowTest8) {
-      ThrowingClassMock tcm;
-      return EXPECT_THROW_MESSAGE(tcm.cStringThrowingFunction(), std::invalid_argument, "This is not a usual throw message.");
-    };
+    // TEST(MessageThrowTest8) {
+    //   ThrowingClassMock tcm;
+    //   return EXPECT_THROW_MESSAGE(tcm.cStringThrowingFunction(), std::invalid_argument, "This is not a usual throw message.");
+    // };
 
-    TEST(MessageThrowTest9) {
-      ThrowingClassMock tcm;
-      return EXPECT_ANY_THROW(tcm.stdStringThrowingFunction());
-    };
+    // TEST(MessageThrowTest9) {
+    //   ThrowingClassMock tcm;
+    //   return EXPECT_ANY_THROW(tcm.stdStringThrowingFunction());
+    // };
 
-    TEST(MessageThrowTest10) {
-      ThrowingClassMock tcm;
-      return EXPECT_THROW_MESSAGE(tcm.stdStringThrowingFunction(), std::invalid_argument, "This is not a usual throw message.");
-    };
+    // TEST(MessageThrowTest10) {
+    //   ThrowingClassMock tcm;
+    //   return EXPECT_THROW_MESSAGE(tcm.stdStringThrowingFunction(), std::invalid_argument, "This is not a usual throw message.");
+    // };
 
-    TEST(MessageThrowTest11) {
-      ThrowingClassMock tcm;
-      return EXPECT_THROW_MESSAGE(tcm.charThrowingFunction(), std::invalid_argument, "This is not a usual throw message.");
-    };
+    // TEST(MessageThrowTest11) {
+    //   ThrowingClassMock tcm;
+    //   return EXPECT_THROW_MESSAGE(tcm.charThrowingFunction(), std::invalid_argument, "This is not a usual throw message.");
+    // };
 
-    TEST(MessageThrowTest12) {
-      ThrowingClassMock tcm;
-      return EXPECT_ANY_THROW(tcm.nonThrowingFunction());
-    };
+    // TEST(MessageThrowTest12) {
+    //   ThrowingClassMock tcm;
+    //   return EXPECT_ANY_THROW(tcm.nonThrowingFunction());
+    // };
 
   };
 

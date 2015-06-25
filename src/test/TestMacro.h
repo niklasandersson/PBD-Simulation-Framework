@@ -228,7 +228,7 @@ private:
     } \
     if( !result ) { \
       std::ostringstream os; \
-      os << macroStr << "(" << #expression << ") did not throw any exception" << std::endl; \
+      os << macroStr << "(" << #expression << ") did not catch any exception" << std::endl; \
       LOG_FILE_LINE_IMPL(os); \
       if( prefixStr == WARNING_PREFIX ) { \
         log_ << prefixStr << os.str() << std::endl; \
@@ -248,15 +248,15 @@ private:
       result = true; \
     } catch(const std::exception& e) { \
       std::ostringstream os; \
-      os << macroStr << "(" << #expression << ", " << #expectedException << ") did not even throw the expected exception"; \
-      os << ", another faulty exception was thrown ("  << typeid(e).name() << ")" << std::endl; \
+      os << macroStr << "(" << #expression << ", " << #expectedException << ") did not catch the expected exception"; \
+      os << ", another faulty exception was catched ("  << typeid(e).name() << ")" << std::endl; \
       LOG_FILE_LINE_IMPL(os); \
       log_ << prefixStr << os.str() << std::endl; \
       throw; \
     } \
     if( !result ) { \
       std::ostringstream os; \
-      os << macroStr << "(" << #expression << ", " << #expectedException << ") did not throw the expected exception" << std::endl; \
+      os << macroStr << "(" << #expression << ", " << #expectedException << ") did not catch the expected exception" << std::endl; \
       LOG_FILE_LINE_IMPL(os); \
       if( prefixStr == WARNING_PREFIX ) { \
         log_ << prefixStr << os.str() << std::endl; \
@@ -282,8 +282,8 @@ private:
       } \
     } catch(const std::exception& e) { \
       std::ostringstream os; \
-      os << macroStr << "(" << #expression << ", " << #expectedException << ", " << #messageStr << ") did not even throw the expected exception so that the throw messages could not even be compared"; \
-      os << ", another faulty exception was thrown ("  << typeid(e).name() << ")" << std::endl; \
+      os << macroStr << "(" << #expression << ", " << #expectedException << ", " << #messageStr << ") did not even catch the expected exception so that the throw messages could not even be compared"; \
+      os << ", another faulty exception was catched ("  << typeid(e).name() << ")" << std::endl; \
       LOG_FILE_LINE_IMPL(os); \
       log_ << prefixStr << os.str() << std::endl; \
       throw; \
@@ -292,10 +292,10 @@ private:
     if( !result ) { \
       std::ostringstream os; \
       if( rightExceptionThrown ) { \
-        os << macroStr << "(" << #expression << ", " << #expectedException << ", " << #messageStr << ") did throw the expected exception but with the wrong message '"; \
+        os << macroStr << "(" << #expression << ", " << #expectedException << ", " << #messageStr << ") did catch the expected exception but with the wrong message '"; \
         os << thrownMessage << "'" << std::endl; \
       } else { \
-        os << macroStr << "(" << #expression << ", " << #expectedException << ", " << #messageStr << ") did not even throw the expected exception so that the throw messages could not even be compared"; \
+        os << macroStr << "(" << #expression << ", " << #expectedException << ", " << #messageStr << ") did not even catch the expected exception so that the throw messages could not even be compared"; \
         os << std::endl; \
       } \
       LOG_FILE_LINE_IMPL(os); \
