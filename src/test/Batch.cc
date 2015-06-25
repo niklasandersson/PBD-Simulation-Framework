@@ -156,21 +156,46 @@ bool Batch::execute() {
     bool testResult = false;
     std::string testLog;
 
+    std::ostringstream throwOs;
+    bool exceptionThrown = false;
+
     try {
       testResult = test->test();
       testLog = test->getLog();
     } catch( const std::exception& e ) {
-      // testLog = test->getLog();
-      testResult = false;
-      std::ostringstream os;
-      // os << Ansi::color("Error:", Ansi::Color::RED, Ansi::Type::NORMAL) << std::endl;
-      // os << "Uncaught exception: " << typeid(e).name() << std::endl;
-      os  << "Error, uncaught exception: " << typeid(e).name() << std::endl;
-      os << e.what() << std::endl;
-      os << log_.getResult(testResult, test->hasWarning()) << std::endl << std::endl;
-      test->log(os.str());
+      exceptionThrown = true;
+      throwOs  << "Error, uncaught exception: " << typeid(e).name() << std::endl;
+      throwOs << "(" << e.what() << ")" << std::endl;
+    } catch( const unsigned int& e ) {
+      exceptionThrown = true;
+      throwOs  << "Error, uncaught exception: unsigned int exception" << std::endl;
+      throwOs << "(" << e << ")" << std::endl;
+    } catch( const int& e ) {
+      exceptionThrown = true;
+      throwOs  << "Error, uncaught exception: " << "int exception" << std::endl;
+      throwOs << "(" << e << ")" << std::endl;
+    } catch( const char* e ) {
+      exceptionThrown = true;
+      throwOs  << "Error, uncaught exception: " << "c-string exception" << std::endl;
+      throwOs << "(" << e << ")" << std::endl;
+    } catch( const std::string& e ) {
+      exceptionThrown = true;
+      throwOs  << "Error, uncaught exception: " << "std::string exception" << std::endl;
+      throwOs << "(" << e << ")" << std::endl;
+    } catch( const char& e ) {
+      exceptionThrown = true;
+      throwOs  << "Error, uncaught exception: " << "char exception" << std::endl;
+      throwOs << "(" << e << ")" << std::endl;
+    } catch( ... ) {
+      exceptionThrown = true;
+      throwOs  << "Error, uncaught exception: " << "unknown exception" << std::endl;
+    }
+
+    if( exceptionThrown ) {
+      testResult = false;;
+      throwOs << log_.getResult(testResult, test->hasWarning()) << std::endl << std::endl;
+      test->log(throwOs.str());
       testLog = test->getLog();
-      // testLog += os.str();
     }
 
     if( !testResult ) {
