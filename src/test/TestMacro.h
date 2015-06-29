@@ -17,84 +17,23 @@
 class TestMacro : public Test {
 
 public:
-  TestMacro(const std::string& name) : Test{name} {
-    func_ = std::shared_ptr<std::function<bool(TestLog&)> >{new std::function<bool(TestLog&)>};
-  }
-
-  TestMacro(const std::string& name, const std::string& fileName, const unsigned int line) : Test{name, fileName, line} {
-    func_ = std::shared_ptr<std::function<bool(TestLog&)> >{new std::function<bool(TestLog&)>};
-  }
+  TestMacro(const std::string& name);
+  TestMacro(const std::string& name, const std::string& fileName, const unsigned int line);
 
   virtual ~TestMacro() = default;
 
-  virtual bool test() override {
-    log_.testBegin(getName());
+  virtual bool test() override;
 
-    std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+  std::shared_ptr<std::function<bool(TestLog&)> > getFunc() const;
 
-    const bool testResult = (*func_)(log_);
+  static void setActiveBatch(Batch& batch);
+  static void setActiveBatch(Batch* batch);
 
-    std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
-    unsigned int duration = std::chrono::duration_cast<std::chrono::milliseconds>( t2 - t1 ).count();
+  static void removeActiveBatch(Batch& batch);
+  static void removeActiveBatch(Batch* batch);
 
-    setDuration(duration);
-
-    log_.testEnd(testResult);
-
-    return testResult;
-  }
-
-  std::shared_ptr<std::function<bool(TestLog&)> > getFunc() const {
-    return func_;
-  }
-
-  static void setActiveBatch(Batch& batch) {
-    activeBatch_ = &batch;
-    batchIsActive_ = true;
-    activeBatches_.push_back(&batch);
-  };
-
-  static void setActiveBatch(Batch* batch) {
-    activeBatch_ = batch;
-    batchIsActive_ = true;
-    activeBatches_.push_back(batch);
-  };
-
-  static void removeActiveBatch(Batch& batch) {
-    if( &batch == activeBatch_ ) {
-      activeBatches_.pop_back();
-      if( !activeBatches_.empty() ) {
-        activeBatch_ = activeBatches_.back();
-      } else {
-        batchIsActive_ = false;
-        activeBatch_ = nullptr;
-      }
-    } 
-  };
-
-  static void removeActiveBatch(Batch* batch) {
-    if( batch == activeBatch_ ) {
-      activeBatches_.pop_back();
-      if( !activeBatches_.empty() ) {
-        activeBatch_ = activeBatches_.back();
-      } else {
-        batchIsActive_ = false;
-        activeBatch_ = nullptr;
-      }
-    } 
-  };
-
-  static void addTestToActiveBatch(Test& test) {
-    if( batchIsActive_ && activeBatch_ ) {
-      activeBatch_->add(&test);
-    }
-  }
-
-  static void addTestToActiveBatch(Test* test) {
-    if( batchIsActive_ && activeBatch_ ) {
-      activeBatch_->add(test);
-    }
-  }
+  static void addTestToActiveBatch(Test& test);
+  static void addTestToActiveBatch(Test* test);
 
 protected:
   std::shared_ptr<std::function<bool(TestLog&)> > func_;
@@ -152,6 +91,7 @@ private:
 
 #define RUN_TEST(name) \
   name.run()
+
 
 
 #define ERROR_PREFIX "Error: "
@@ -216,6 +156,7 @@ private:
 
 #define ASSERT_WARNING(expression) \ 
   ASSERT_IMPL(expression, LOG_WARNING_FOR_ONE_ARG_IMPL)
+
 
 
 #define EXPECT_ANY_THROW_IMPL(macroStr, expression, prefixStr) \
@@ -462,6 +403,7 @@ T orer(T first, Args... args) {
 
 #define XOR_WARNING(arg1, arg2) \
   XOR_IMPL(arg1, arg2, LOG_WARNING_FOR_TWO_ARGS_IMPL)
+
 
 
 #endif
