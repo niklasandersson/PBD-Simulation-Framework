@@ -135,6 +135,7 @@ void TestManager::listAllBatches() {
 void TestManager::saveAllTestsToFile() {
   Log savedTestsLog;
   savedTestsLog.setFileName("tests.txt");
+  savedTestsLog.disablePrintToCout();
   registerTests();
   for(auto& test : tests_) {
     savedTestsLog << test->getName() << std::endl;

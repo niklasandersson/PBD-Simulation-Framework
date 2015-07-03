@@ -39,4 +39,5 @@ else
 fi
 
 echo --- autoComplete.sh ---
+./test saveallteststofile
 . ./autoComplete.sh
