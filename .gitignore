@@ -47,6 +47,9 @@ archive.zip
 dist.zip
 config
 
+main.makefile
+test.makefile
+
 # All logs, including testlogs
 logs/
 tests.txt
