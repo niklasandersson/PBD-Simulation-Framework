@@ -112,6 +112,12 @@ void Log::end() {
 }
 
 
+void Log::write(std::string fileName) {
+  fileName_ = fileName;
+  write();
+}
+
+
 void Log::write() {
   std::ofstream output;
   try {

@@ -2,8 +2,9 @@
 
 int main(int argc, const char* argv[]) {
 
-  std::cout << "PDB-Simulation-Framework" << std::endl;
+  std::cout << "PDB-Simulation-Framework: Welcome!" << std::endl;
+  std::cout << "PDB-Simulation-Framework: Goodbye!" << std::endl;
 
-  return EXIT_SUCCESS;
+  std::exit(EXIT_SUCCESS);
 
 }

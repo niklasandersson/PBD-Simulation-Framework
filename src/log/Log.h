@@ -55,6 +55,7 @@ public:
   void begin();
   void end();
 
+  void write(std::string fileName);
   void write();
 
 protected:
