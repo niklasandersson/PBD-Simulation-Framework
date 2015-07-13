@@ -1,0 +1,38 @@
+// This is Our Config file
+
+#define MYVAL 1337
+application: {
+
+  resolution_x = 800;
+  resolution_y = 600;
+
+  opencl: {
+
+  }
+  
+  a = 5;
+  b=10;
+  c = "Detta är en mening.";
+
+  group1: {
+    x= 1;
+    y = 2;
+  }
+/*
+
+  KOMMENTAR
+  ;
+  ; 
+  z ? 44
+
+*/
+  group2: {
+    x = 3;
+    y =MYVAL;
+    z = 13.37;
+  };
+  d = "hej jocke";
+  
+}
+
+e = "ja hej";

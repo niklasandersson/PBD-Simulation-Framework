@@ -1,0 +1,2 @@
+Detta är fil 4.
+// Hej detta e comment.

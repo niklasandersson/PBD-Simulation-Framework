@@ -1,0 +1,6 @@
+Detta är fil 2.
+/*
+  #include "tests/parser/inc5.txt"
+  COMMENTS
+*/
+#include "tests/parser/inc3.txt"

@@ -1,0 +1,4 @@
+// COMMENT
+Detta är fil 1.
+#define TEST JOCKE
+#include "tests/parser/inc2.txt"

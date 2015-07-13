@@ -1,0 +1,3 @@
+Detta är fil 3.
+#include "tests/parser/inc4.txt"
+TEST+TEST

@@ -48,18 +48,22 @@ BATCH_CLASS(AndBatch) {
   BATCH(AndWarningBatch) {
 
     TEST(AndBatchTest7) {
+      LOG_EXPECT_WARNING(log_);
       return AND_WARNING(true, false) == false;
     };
 
     TEST(AndBatchTest8) {
+      LOG_EXPECT_WARNING(log_);
       return AND_WARNING(true, true, false, true, true) == false;
     };
 
     TEST(AndBatchTest9) {
+      LOG_EXPECT_WARNING(log_);
       return AND_WARNING(false, true, true, true, true) == false;
     };
 
     TEST(AndBatchTest10) {
+      LOG_EXPECT_WARNING(log_);
       return AND_WARNING(true, true, true, true, false) == false;
     };
 
