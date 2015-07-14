@@ -1,4 +1,22 @@
-0
-y
-0
-y
+
+Application: 
+{
+  title = "PBD-Simulation-Framework";
+  version = "1.0";
+  authors = ["Joakim Deborg", "Niklas Andersson", "Gabriel Baravdish"];
+  license = "Do whatever you don't want to do, but praise us, the authors.";
+
+  OpenCL: 
+  {
+    interactiveSetup = false;
+
+    defaultSetup =  // To be used when interactiveSetup = false
+    "
+    0
+    Y
+    0
+    Y
+    ";
+  }
+
+}

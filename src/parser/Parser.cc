@@ -3,7 +3,7 @@
 
 std::string Parser::getFileName() const {
   if( !fileNameSet_ ) {
-    throw std::invalid_argument{"The file name is not set"};
+    throw std::runtime_error{"The file name is not set"};
   }
   return fileName_;
 }
@@ -11,7 +11,7 @@ std::string Parser::getFileName() const {
 
 std::string Parser::getFilePath() const {
   if( !filePathSet_ ) {
-    throw std::invalid_argument{"The file path is not set"};
+    throw std::runtime_error{"The file path is not set"};
   }
   return filePath_;
 }

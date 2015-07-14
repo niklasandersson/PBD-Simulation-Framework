@@ -1,6 +1,14 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include <iostream>
+#include <sstream>
+#include <algorithm>
+#include <typeinfo>
+#include <stdexcept>
+
+#include <exception/Error.h>
+
 #include "parser/Parser.h"
 #include "parser/RecursiveParser.h"
 #include "parser/CommentParser.h"
@@ -23,11 +31,18 @@ public:
     return parser.getValue<T>(args...);
   }
 
+  template<unsigned int nArgs, typename T, typename... S>
+  T* getArray(S... args) {
+    return parser.getArray<nArgs, T>(args...);
+  }
+
 protected:
 
 private:
   Config() {
-    std::string pathAndName = "tests/parser/conf1.txt";
+    std::string pathAndName = "config.txt";
+    parser.addDefine("true", "1");
+    parser.addDefine("false", "0");
     parser.parseFile(pathAndName);
   }
 

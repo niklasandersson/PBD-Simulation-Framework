@@ -1,6 +1,10 @@
 #ifndef OPENCLSTUB_H
 #define OPENCLSTUB_H
 
+#include <iostream>
+#include <sstream>
+#include <string>
+
 #include <CL/cl.h>
 #include <CL/cl_gl.h>
 #ifdef __linux__
@@ -10,7 +14,7 @@
 #include "exception/Error.h"
 #include "opencl/Demo_CL_Window.h"
 #include "opencl/OpenCL_Loader.h"
-#include "parser/Parser.h"
+#include "parser/Config.h"
 
 
 class OpenCLStub {
@@ -44,15 +48,15 @@ protected:
 
 private:
   OpenCLStub() {
-    Parser parser;
-    std::string openCL_config = parser.parseFile("config.txt");
-
-    std::istringstream is{openCL_config};
     std::ostringstream os;
 
     try {
-      // Demo_CL_Window::getInstance().initialize(is, os);
-      Demo_CL_Window::getInstance().initialize();
+      if( Config::getInstance().getValue<bool>("Application", "OpenCL", "interactiveSetup") ) {
+        Demo_CL_Window::getInstance().initialize();
+      } else {
+        std::istringstream is{Config::getInstance().getValue<std::string>("Application", "OpenCL", "defaultSetup")};
+        Demo_CL_Window::getInstance().initialize(is, os);
+      }
     } catch(const std::domain_error& e) {
       print_error(e);
       std::exit(EXIT_FAILURE);

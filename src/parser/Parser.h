@@ -54,11 +54,11 @@ protected:
 
 
   virtual void setup() {
-    std::cout << "Setup: Parser" << std::endl;
+    // std::cout << "Setup: Parser" << std::endl;
   }
 
   virtual void cleanup() {
-    std::cout << "Cleanup: Parser" << std::endl;
+    // std::cout << "Cleanup: Parser" << std::endl;
   }
 
   virtual void setuper() {}
@@ -69,7 +69,7 @@ protected:
 
 
   virtual std::string actualLineParsing(const std::string& onePreParsedLine) {
-    std::cout << "ActualLineParsing: Parser: " << onePreParsedLine << std::endl;
+    // std::cout << "ActualLineParsing: Parser: " << onePreParsedLine << std::endl;
     return onePreParsedLine;
   }
 

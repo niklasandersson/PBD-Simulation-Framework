@@ -137,8 +137,30 @@ BATCH_CLASS(RecursiveParserBatch) {
     };
 
     TEST(ConfigTest1) {
-      log_ << Config::getInstance().getValue<std::string>("application", "c") << std::endl;
-      log_ << Config::getInstance().getValue<std::string>("application", "group2", "z") << std::endl;
+      log_ << Config::getInstance().getValue<std::string>("Application", "title") << std::endl;
+      log_ << Config::getInstance().getValue<std::string>("Application", "author") << std::endl;
+      return true;
+    };
+
+    TEST(ConfigTest2) {
+      unsigned int* array = Config::getInstance().getArray<4, unsigned int>("Application", "array1");
+      log_ << "Array: ";
+      for(unsigned int i=0; i<4; i++) {
+        log_ << array[i] << "|";
+      }
+      log_ << std::endl;
+      delete [] array;
+      return true;
+    };
+
+    TEST(ConfigTest3) {
+      std::string* array = Config::getInstance().getArray<4, std::string>("Application", "array2");
+      log_ << "Array: ";
+      for(unsigned int i=0; i<4; i++) {
+        log_ << array[i] << "|";
+      }
+      log_ << std::endl;
+      delete [] array;
       return true;
     };
 

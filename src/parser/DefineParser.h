@@ -29,16 +29,16 @@ protected:
 
  
   void setup() override {
-    std::cout << "Setup: DefineParser" << std::endl;
+    // std::cout << "Setup: DefineParser" << std::endl;
   } 
 
   void cleanup() override {
-    std::cout << "Cleanup: DefineParser" << std::endl;
+    // std::cout << "Cleanup: DefineParser" << std::endl;
     defines_.clear();
   }
 
   virtual std::string actualLineParsing(const std::string& onePreParsedLine) override {
-    std::cout << "ActualLineParsing: DefineParser: " << onePreParsedLine << std::endl;
+    // std::cout << "ActualLineParsing: DefineParser: " << onePreParsedLine << std::endl;
     
     std::string finalLine;
     std::string token;

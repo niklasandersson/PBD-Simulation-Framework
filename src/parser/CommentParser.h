@@ -12,16 +12,16 @@ public:
 protected:
 
   void setup() override {
-    std::cout << "Setup: CommentParser" << std::endl;
+    // std::cout << "Setup: CommentParser" << std::endl;
   } 
 
   void cleanup() override {
-    std::cout << "Cleanup: CommentParser" << std::endl;
+    // std::cout << "Cleanup: CommentParser" << std::endl;
     inComment_ = false;
   }
 
   virtual std::string actualLineParsing(const std::string& onePreParsedLine) {
-    std::cout << "ActualLineParsing: CommentParser: " << onePreParsedLine << std::endl;
+    // std::cout << "ActualLineParsing: CommentParser: " << onePreParsedLine << std::endl;
 
     std::string finalLine;
     char ab[2];

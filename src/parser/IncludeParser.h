@@ -17,17 +17,17 @@ protected:
 
  
   void setup() override {
-    std::cout << "Setup: IncludeParser" << std::endl;
+    // std::cout << "Setup: IncludeParser" << std::endl;
     includedFiles_.push_back(RecursiveParser<Parser>::getFileName());
   } 
 
   void cleanup() override {
-    std::cout << "Cleanup: IncludeParser" << std::endl;
+    // std::cout << "Cleanup: IncludeParser" << std::endl;
     includedFiles_.clear();
   }
 
   virtual std::string actualLineParsing(const std::string& onePreParsedLine) override {
-    std::cout << "ActualLineParsing: IncludeParser: " << onePreParsedLine << std::endl;
+    // std::cout << "ActualLineParsing: IncludeParser: " << onePreParsedLine << std::endl;
     std::string finalLine;
     std::string token;
     std::istringstream is{onePreParsedLine};
