@@ -2,7 +2,7 @@
 Application: 
 {
   title = "PBD-Simulation-Framework";
-  version = "1.0";
+  version = 0.1;
   authors = ["Joakim Deborg", "Niklas Andersson", "Gabriel Baravdish"];
   license = "Do whatever you don't want to do, but praise us, the authors.";
 

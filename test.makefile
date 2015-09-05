@@ -40,7 +40,7 @@ CXXFLAGS = -c -std=c++11 $(INCDIR)
 CPPFLAGS = -MMD -MP
 
 # Specify linker flags.
-LDFLAGS = -L"lib"
+LDFLAGS = -L"lib" -L/usr/local/cuda-6.0/lib64
 
 # Specify libraries.
 ifeq ($(OS), Windows_NT)

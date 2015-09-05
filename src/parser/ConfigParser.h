@@ -9,18 +9,16 @@
 #include "parser/RecursiveParser.h"
 #include "parser/ConfigObject.h"
 
+#define DEFAULT_SCOPE "global"
+
 template<typename Parser>
 class ConfigParser : public RecursiveParser<Parser> {
 
 public:
-  ConfigParser() : globalScope_(new ConfigObject("global")) {}  
+  ConfigParser() : globalScope_(new ConfigObject(DEFAULT_SCOPE)) {}  
 
-  template<typename T, typename... S>
-  T getValue(S... args) {
-
-    std::vector<std::string> path;
-    getPath(path, args...);
-
+  template<typename T>
+  T getValueImpl(const std::vector<std::string>& path) {
     std::string temp;
     try {
       std::shared_ptr<ConfigObject> scope = globalScope_;
@@ -48,9 +46,16 @@ public:
     return std::move(rtr);
   }
 
-  template<unsigned int nArgs, typename T, typename... S>
-  T* getArray(S... args) {
-    std::string str = getValue<std::string>(args...);
+  template<typename T, typename... S>
+  T getValue(S... args) {
+    std::vector<std::string> path;
+    getPath(path, args...);
+    return getValueImpl<T>(path);
+  }
+
+  template<unsigned int nArgs, typename T>
+  T* getArrayImpl(const std::vector<std::string>& path) {
+    std::string str = getValueImpl<std::string>(path);
     std::istringstream is{str};
     T* array = new T[nArgs];
     unsigned int numberOfParsedArguments = 0;
@@ -63,8 +68,7 @@ public:
     }
     is >> std::ws;
     if( (numberOfParsedArguments != nArgs) || !is.eof() ) {
-      std::vector<std::string> path;
-      getPath(path, args...);
+      
       std::ostringstream os{};
       bool first = true;
       for(auto& p : path) {
@@ -79,6 +83,13 @@ public:
             << " the array contains the wrong number of elements " ) };
     }
     return array;
+  }
+
+  template<unsigned int nArgs, typename T, typename... S>
+  T* getArray(S... args) {
+    std::vector<std::string> path;
+    getPath(path, args...);
+    return getArrayImpl<nArgs, T>(path);
   }
 
 protected:
