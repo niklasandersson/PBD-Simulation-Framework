@@ -1,0 +1,16 @@
+/**************************************/
+/*  Write Programs here to have them  */
+/*  loaded all at once using          */
+/*  the function                      */
+/*  loadPrograms(PATH_TO_THIS_FILE)   */
+/*  on a OpenGL_Loader.               */
+/*                                    */
+/*  Ex:                               */
+/*  program_name name.vert name.frag  */
+/*                                    */
+/*  These Programs can then be        */
+/*  accessed through                  */
+/*  accessProgram("program_name").    */
+/*                                    */
+/**************************************/
+

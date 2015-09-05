@@ -1,16 +1,23 @@
 
 Application: 
 {
-  title = "PBD-Simulation-Framework";
+  name = "PBD-Simulation-Framework";
   version = 0.1;
   authors = ["Joakim Deborg", "Niklas Andersson", "Gabriel Baravdish"];
   license = "Do whatever you don't want to do, but praise us, the authors.";
+
+  OpenGL: 
+  {
+    width = 800;
+    height = 600;
+  }
 
   OpenCL: 
   {
     interactiveSetup = false;
 
-    defaultSetup =  // To be used when interactiveSetup = false
+    // To be used when interactiveSetup = false
+    defaultSetup =  
     "
     0
     Y

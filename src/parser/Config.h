@@ -10,7 +10,6 @@
 #include <exception/Error.h>
 
 #include "parser/Parser.h"
-#include "parser/RecursiveParser.h"
 #include "parser/CommentParser.h"
 #include "parser/IncludeParser.h"
 #include "parser/DefineParser.h"
