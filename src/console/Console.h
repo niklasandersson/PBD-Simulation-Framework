@@ -36,7 +36,7 @@ public:
 			std::istringstream is(Utils::reverseArgs(args));
 			std::tuple<Ps...> arguments = std::tuple<Ps...>{ extract<Ps>(is)... };
 			call(typename generate<sizeof...(Ps)>::sequence(), c, f, arguments);
-			cout << name << " : CALLED" << endl;
+			// cout << name << " : CALLED" << endl;
 		}));	
 	}
 
@@ -47,7 +47,7 @@ public:
 			std::istringstream is(Utils::reverseArgs(args));
 			std::tuple<Ps...> arguments = std::tuple<Ps...>{ extract<Ps>(is)... };
 			R r = call(typename generate<sizeof...(Ps)>::sequence(), c, f, arguments);
-			cout << name << " : " << r << endl;
+			// cout << name << " : " << r << endl;
 		}));	
 	}
 

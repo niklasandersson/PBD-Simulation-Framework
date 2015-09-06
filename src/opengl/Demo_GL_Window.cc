@@ -16,17 +16,24 @@ Demo_GL_Window::Demo_GL_Window(const unsigned int window_width,
 }
 
 
+Demo_GL_Window::~Demo_GL_Window() {
+  delete scene_;
+}
+  
+
 void Demo_GL_Window::initialize() {
   GLFW_Window::initialize();
 
   loadPrograms();
+
+  scene_ = new Scene();
 
 }
 
 
 void Demo_GL_Window::loadPrograms() {
 
-  OpenGL_Loader openglLoader = OpenGL_Loader::getInstance();
+  OpenGL_Loader& openglLoader = OpenGL_Loader::getInstance();
 
   openglLoader.loadPrograms("src/app/shader/programs.prog");
 
@@ -43,6 +50,7 @@ void Demo_GL_Window::render() {
   GLFW_Window::render();
 
   // Do rendering here
+  scene_->render();
 
   glfwSwapBuffers(glfw_window_);
   glfwPollEvents();

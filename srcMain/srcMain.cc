@@ -9,9 +9,9 @@
 
 
 void printApplicationInfo() {
-  Config config = Config::getInstance();
+  Config& config = Config::getInstance();
 
-  std::string name    = config.getValue<std::string>("Application.name");
+  std::string name     = config.getValue<std::string>("Application.name");
   float version        = config.getValue<float>("Application.version");
   std::string* authors = config.getArray<3, std::string>("Application.authors");
   std::string license  = config.getValue<std::string>("Application.license");
@@ -31,7 +31,7 @@ int main(int argc, const char* argv[]) {
 
   printApplicationInfo();
 
-  Config config = Config::getInstance();
+  Config& config = Config::getInstance();
 
   Demo_GL_Window glWindow(config.getValue<unsigned int>("Application.OpenGL.width"),
                           config.getValue<unsigned int>("Application.OpenGL.height"),

@@ -5,6 +5,8 @@
 
 #include "opengl/OpenGL_Loader.h"
 
+#include "app/Scene.h"
+
 class Demo_GL_Window : public GLFW_Window {
 
 public:
@@ -14,6 +16,8 @@ public:
                  const unsigned int multisampling_and_antialiasing = 4,
                  const unsigned int opengl_major_version = 3,
                  const unsigned int opengl_minor_version = 3);
+
+  ~Demo_GL_Window();
 
   virtual void initialize() override;
   virtual void render() override;
@@ -28,6 +32,8 @@ private:
   unsigned int multisampling_and_antialiasing_;
   unsigned int opengl_major_version_;
   unsigned int opengl_minor_version_;
+
+  Scene* scene_;
 
 };
 
