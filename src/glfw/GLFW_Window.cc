@@ -7,9 +7,15 @@ GLFW_Window::GLFW_Window(const unsigned int window_width, const unsigned int win
 , delta_time_{0}
 , fps_{0}
 , shouldClose_{false}
+, frame_time_index_{0}
+, printFps_{false}
 {
   glfwSetWindowTitle(glfw_window_, window_title_.c_str());
 
+  frame_times_.resize(N_FRAMETIMES);
+  for(unsigned int i=0; i<N_FRAMETIMES; i++) {
+    frame_times_[i] = 0;
+  }
 }
 
 
@@ -54,7 +60,26 @@ void GLFW_Window::render() {
   current_time_ = glfwGetTime();
   delta_time_ = current_time_ - last_time_;
   last_time_ = current_time_;
-  fps_ = 1 / delta_time_;
+
+  frame_time_index_ %= N_FRAMETIMES;
+  frame_times_[frame_time_index_] = delta_time_;
+  frame_time_index_++;
+
+  double total_frame_time = 0;
+  for(unsigned int i=0; i<N_FRAMETIMES; i++) {
+    total_frame_time += frame_times_[i];
+  }
+
+  fps_ = 1.0 / (total_frame_time / (double)N_FRAMETIMES);
+
+  if( printFps_ && current_time_ - lastPrintTime_ > PRINT_FPS_INTERVAL ) {
+    std::cout << "\rFPS: " << static_cast<unsigned int>(fps_);
+    std::cout.flush();
+    lastPrintTime_ = current_time_;
+  }
+
+  glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
 
@@ -87,4 +112,9 @@ bool GLFW_Window::should_close() const {
 
 void GLFW_Window::set_should_close() {
   shouldClose_ = true;
+}
+
+
+void GLFW_Window::set_print_fps(const bool printFps) {
+  printFps_ = printFps;
 }

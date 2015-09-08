@@ -6,6 +6,10 @@
 #include "opengl/OpenGL_Loader.h"
 
 #include "app/Scene.h"
+#include "app/Scene2.h"
+
+#include "console/Console.h"
+
 
 class Demo_GL_Window : public GLFW_Window {
 
@@ -33,7 +37,9 @@ private:
   unsigned int opengl_major_version_;
   unsigned int opengl_minor_version_;
 
+  GLFW_Controls* glfw_controls_;
   Scene* scene_;
+  Scene2* scene2_;
 
 };
 

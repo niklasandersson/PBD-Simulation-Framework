@@ -12,12 +12,14 @@ Demo_GL_Window::Demo_GL_Window(const unsigned int window_width,
 , opengl_major_version_{opengl_major_version}
 , opengl_minor_version_{opengl_minor_version}
 {
-
+  Console::getInstance()->add("fps", dynamic_cast<GLFW_Window*>(this), &GLFW_Window::set_print_fps);
 }
 
 
 Demo_GL_Window::~Demo_GL_Window() {
+  delete glfw_controls_;
   delete scene_;
+  delete scene2_;
 }
   
 
@@ -26,7 +28,21 @@ void Demo_GL_Window::initialize() {
 
   loadPrograms();
 
+  glfw_controls_ = new GLFW_Controls{
+    glfw_window_,
+    get_window_width(),
+    get_window_height(),
+    glm::vec3(0, 1, 0),
+    glm::vec3(0, -1, -1),
+    45.0f,
+    0.1f,
+    100.0f,
+    10.0f,
+    0.002f
+  };
+
   scene_ = new Scene();
+  scene2_ = new Scene2();
 
 }
 
@@ -47,10 +63,19 @@ void Demo_GL_Window::loadPrograms() {
 
 
 void Demo_GL_Window::render() {
-  GLFW_Window::render();
+  GLFW_Window::render();  
+
+  glfw_controls_->computeMatricesFromInput();
+
+  glm::mat4 view_matrix = glfw_controls_->getViewMatrix();
+  glm::mat4 projection_matrix = glfw_controls_->getProjectionMatrix();
+
+  scene2_->setViewMatrix(view_matrix);
+  scene2_->setProjectionMatrix(projection_matrix);
 
   // Do rendering here
-  scene_->render();
+  // scene_->render();
+  scene2_->render();
 
   glfwSwapBuffers(glfw_window_);
   glfwPollEvents();
